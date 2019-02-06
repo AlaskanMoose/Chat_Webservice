@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
   res.writeHead(200, { "Content-Type": "text/html" });
   for (i = 1; i < 7; i++) {
     //write a response to the client
-    res.write("<h" + i + ' style="color:blue">Hello World!</h' + i + ">");
+    res.write("<h" + i + ' style="color:blue">Hello World!!</h' + i + ">");
   }
   res.end(); //end the response
 });

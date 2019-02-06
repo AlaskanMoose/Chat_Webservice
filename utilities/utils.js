@@ -1,6 +1,6 @@
 //Get the connection to Heroku Database
 let db = require("./sql_conn.js");
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
 
 //We use this create the SHA256 hash
 const crypto = require("crypto");
