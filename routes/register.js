@@ -53,7 +53,7 @@ router.post("/", (req, res) => {
           "uwnetid@uw.edu",
           email,
           "Welcome!",
-          `<strong> Welcome to chat450! Click <a href=http://chat450.herokuapp/register/verify?name=${email}>HERE</a> to verifiy your account.</strong>`
+          `<strong> Welcome to chat450! Click <a href=https://chat450.herokuapp/register/verify?name=${email}>HERE</a> to verifiy your account.</strong>`
         );
       })
       .catch(err => {
