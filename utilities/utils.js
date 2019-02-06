@@ -1,6 +1,6 @@
 //Get the connection to Heroku Database
 let db = require("./sql_conn.js");
-// const nodemailer = require("nodemailer");
+const nodemailer = require("nodemailer");
 
 //We use this create the SHA256 hash
 const crypto = require("crypto");
@@ -14,25 +14,25 @@ function sendEmail(from, receiver, subj, message) {
   //make sure you add the password to the environmental variables
   //similar to the DATABASE_URL and PHISH_DOT_NET_KEY (later section of the lab)
 
-  // var transporter = nodemailer.createTransport({
-  //   service: "gmail",
-  //   auth: {
-  //     user: "ratchetskaterjd@gmail.com",
-  //     pass: process.env.EMAIL_PASSWORD
-  //   }
-  // });
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "emailchat450@gmail.com",
+      pass: process.env.EMAIL_PASSWORD
+    }
+  });
 
-  // const mailOptions = {
-  //   from: "ratchetskater@gmail.com", // sender address
-  //   to: receiver, // list of receivers
-  //   subject: subj, // Subject line
-  //   html: message // plain text body
-  // };
+  const mailOptions = {
+    from: "emailchat450@gmail.com", // sender address
+    to: receiver, // list of receivers
+    subject: subj, // Subject line
+    html: message // plain text body
+  };
 
-  // transporter.sendMail(mailOptions, function(err, info) {
-  //   if (err) console.log(err);
-  //   else console.log(info);
-  // });
+  transporter.sendMail(mailOptions, function(err, info) {
+    if (err) console.log(err);
+    else console.log(info);
+  });
 }
 
 /**

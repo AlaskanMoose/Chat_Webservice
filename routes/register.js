@@ -53,7 +53,7 @@ router.post("/", (req, res) => {
           "uwnetid@uw.edu",
           email,
           "Welcome!",
-          `<strong> Welcome to our app! Click <a href=http://localhost:5000/register/verify?name=${email}>HERE</a> to verifiy email </strong>`
+          `<strong> Welcome to chat450! Click <a href=http://localhost:5000/register/verify?name=${email}>HERE</a> to verifiy your account.</strong>`
         );
       })
       .catch(err => {
@@ -75,17 +75,15 @@ router.post("/", (req, res) => {
   }
 });
 
-// router.get("/verify", (req, res) => {
-//   let email = req.query["name"];
-//   db.one("UPDATE Members SET Verification=1 WHERE Email=$1", [email]).then(
-//     //TODO Handle promise
-//     row => {}
-//   );
+router.get("/verify", (req, res) => {
+  let email = req.query["name"];
+  db.one("UPDATE Members SET Verification=1 WHERE Email=$1", [email]).then(
+    //TODO Handle promise
+    row => {}
+  );
 
-//   res.send({
-//     //req.query is a reference to arguments in the url
-//     message: "Verifed, " + req.query["name"] + "!"
-//   });
-// });
+  res.writeHead(200, { "Content-Type": "text/html" });
+  res.write(`<h1> ${email} verified! </h1>`);
+});
 
 module.exports = router;
