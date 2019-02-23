@@ -48,8 +48,8 @@ function getHash(pw, salt) {
     .digest("hex");
 }
 
-module.exports = {
-  db,
-  getHash,
-  sendEmail
+let messaging = require('./pushy_services.js');
+module.exports = { 
+    db, getHash, sendEmail, messaging
 };
+
