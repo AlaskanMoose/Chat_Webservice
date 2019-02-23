@@ -17,7 +17,7 @@ console.log("MADE IT");
 app.use("/login", require("./routes/login.js"));
 app.use("/register", require("./routes/register.js"));
 // app.use('/pushy', require('./routes/pushy.js'));
-app.use('/pushy', middleware.checkToken, require('./routes/pushy.js'));
+app.use('/pushy', require('./routes/pushy.js'));
 
 /*
  * Return HTML for the / end point.

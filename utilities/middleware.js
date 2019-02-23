@@ -2,7 +2,6 @@ let jwt = require('jsonwebtoken');
 let config = {
     secret: process.env.JSON_WEB_TOKEN
 };
-
 let checkToken = (req, res, next) => {
   let token = req.headers['x-access-token'] || req.headers['authorization']; // Express headers are auto converted to lowercase
 
@@ -15,7 +14,6 @@ let checkToken = (req, res, next) => {
 
     jwt.verify(token, config.secret, (err, decoded) => {
       if (err) {
-        console.log(err)
         return res.json({
           success: false,
           message: 'Token is not valid'
