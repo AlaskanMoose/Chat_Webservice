@@ -40,9 +40,9 @@ router.post("/", (req, res) => {
     //If you want to read more: https://stackoverflow.com/a/8265319
     let params = [first, last, username, email, salted_hash, salt];
     db.none(
-      "INSERT INTO MEMBERS(FirstName, LastName, Username, Email, Password, Salt) VALUES ($1, $2, $3, $4, $5, $6)",
-      params
-    )
+        "INSERT INTO MEMBERS(FirstName, LastName, Username, Email, Password, Salt) VALUES ($1, $2, $3, $4, $5, $6)",
+        params
+      )
       .then(() => {
         //We successfully added the user, let the user know
         res.send({
@@ -82,7 +82,9 @@ router.get("/verify", (req, res) => {
     row => {}
   );
 
-  res.writeHead(200, { "Content-Type": "text/html" });
+  res.writeHead(200, {
+    "Content-Type": "text/html"
+  });
   res.write(`<h1> ${email} verified! </h1>`);
 });
 
