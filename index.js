@@ -14,16 +14,16 @@ const pgp = require("pg-promise")();
 //We have to set ssl usage to true for Heroku to accept our connection
 pgp.pg.defaults.ssl = true;
 
-app.use('/hello', require('./routes/hello.js'));
+app.use("/hello", require("./routes/hello.js"));
 
 app.use("/login", require("./routes/login.js"));
 
 app.use("/register", require("./routes/register.js"));
 
 // app.use('/pushy', require('./routes/pushy.js'));
-app.use('/pushy', require('./routes/pushy.js'));
+app.use("/pushy", require("./routes/pushy.js"));
 
-app.use('/messaging', require('./routes/messaging.js'));
+app.use("/messaging", require("./routes/messaging.js"));
 
 /*
  * Return HTML for the / end point.
