@@ -32,7 +32,7 @@ router.post("/send", (req, res) => {
     .then(() => {
       //send a notification of this message to ALL members with registered tokens
       db.manyOrNone(
-        "SELECT keyid, Push_token.memberid, token from Push_token, chatmembers WHERE chatmembers.memberid = Push_Token.memberid AND chatmembers.chatid = 1"
+        `SELECT keyid, Push_token.memberid, token from Push_token, chatmembers WHERE chatmembers.memberid = Push_Token.memberid AND chatmembers.chatid = ${chatId}`
       )
         .then(rows => {
           rows.forEach(element => {
