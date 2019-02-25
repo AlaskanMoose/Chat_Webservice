@@ -8,7 +8,7 @@ var router = express.Router();
 
 router.post("/", (req, res) => {
   let members = [];
-  db.manyOrNone(`SELECT Firstname, Lastname, username FROM Members`)
+  db.manyOrNone(`SELECT Firstname, Lastname, username, MemberID FROM Members`)
     .then(rows => {
       rows.forEach(element => {
         members.push(element);
