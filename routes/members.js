@@ -6,7 +6,7 @@ let db = require("../utilities/utils").db;
 var router = express.Router();
 // return all the members in the DB
 
-router.post("/", (req, res) => {
+router.get("/", (req, res) => {
   let members = [];
   db.manyOrNone(`SELECT email, Firstname, Lastname, username, MemberID FROM Members`)
     .then(rows => {
