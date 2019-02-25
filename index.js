@@ -24,6 +24,10 @@ app.use("/register", require("./routes/register.js"));
 app.use("/pushy", require("./routes/pushy.js"));
 
 app.use("/messaging", require("./routes/messaging.js"));
+app.use("/members", require("./routes/members.js"));
+app.use("/contacts", require("./routes/contacts.js"));
+
+// app.use("/contacts", require("./routes/contacts.js"));
 
 /*
  * Return HTML for the / end point.
