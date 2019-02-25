@@ -52,8 +52,8 @@ router.post("/", (req, res) => {
         sendEmail(
           "uwnetid@uw.edu",
           email,
-          "Welcome!",
-          `<strong> Welcome to chat450! Click <a href=https://chat450.herokuapp.com/register/verify?name=${email}>HERE</a> to verifiy your account.</strong>`
+          "welcome to your new aMessage Account!",
+          `<img src="https://res.cloudinary.com/dq5kixztw/image/upload/v1551050178/logo.png"><strong> Thanks for choosing aMessage for your chat needs! Click <a href=https://chat450.herokuapp.com/register/verify?name=${email}>HERE</a> to verifiy your account.</strong>`
         );
       })
       .catch(err => {

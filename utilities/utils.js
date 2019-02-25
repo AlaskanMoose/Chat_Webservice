@@ -17,7 +17,7 @@ function sendEmail(from, receiver, subj, message) {
   var transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "emailchat450@gmail.com",
+      user: "jason.amessage@gmail.com",
       pass: process.env.EMAIL_PASSWORD
     }
   });
@@ -48,8 +48,10 @@ function getHash(pw, salt) {
     .digest("hex");
 }
 
-let messaging = require('./pushy_services.js');
-module.exports = { 
-    db, getHash, sendEmail, messaging
+let messaging = require("./pushy_services.js");
+module.exports = {
+  db,
+  getHash,
+  sendEmail,
+  messaging
 };
-
