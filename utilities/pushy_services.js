@@ -31,7 +31,7 @@ function sendToTopic(topic, msg, from) {
 
 //use to send message to a specific client by the token
 function sendToIndividual(token, msg, from, chatid) {
-  //build the message for FCM to send
+  //build the message
   var data = {
     type: "msg",
     sender: from,
