@@ -1,0 +1,60 @@
+ db.manyOrNone(
+    `select chats.chatid, chats.name from chats, members, chatmembers where members.memberid = chatmembers.memberid AND chatmembers.chatid = chats.chatid and chatmembers.memberid = ${memberid};`
+  )
+
+
+
+   db.manyOrNone(
+          `Select username, firstname, email from members, chatmembers, chats where members.memberid = chatmembers.memberid AND chatmembers.chatid = chats.chatid AND chats.chatid = ${chatid} AND chatmembers.memberid != ${memberid};`
+        )
+
+
+
+
+
+
+
+
+
+
+
+
+
+        db.manyOrNone(
+    `select chats.chatid, chats.name from chats, members, chatmembers where members.memberid = chatmembers.memberid AND chatmembers.chatid = chats.chatid and chatmembers.memberid = ${memberid};`
+  )
+    .then(rows => {
+      rows.forEach(element => {
+        let chatid = element["chatid"];
+        let members = [];
+        db.manyOrNone(
+          `Select username, firstname, email from members, chatmembers, chats where members.memberid = chatmembers.memberid AND chatmembers.chatid = chats.chatid AND chats.chatid = ${chatid} AND chatmembers.memberid != ${memberid};`
+        )
+          .then(rows => {
+            rows.forEach(element => {
+              members.push(element);
+            });
+          })
+          .catch(err => {
+            res.send({
+              success: false,
+              error: err
+            });
+          });
+        result.push({
+          chatid: chatid,
+          members: members
+        });
+      });
+      console.log("bye ");
+      res.send({
+        success: true,
+        result: result
+      });
+    })
+    .catch(err => {
+      res.send({
+        success: false,
+        error: err
+      });
+    });

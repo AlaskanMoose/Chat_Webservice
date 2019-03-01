@@ -97,4 +97,35 @@ router.post("/myContacts", (req, res) => {
       });
     });
 });
+// Takes in memberid and returns an array of members
+// that have requested to add you as connection
+router.post("/pending", (req, res) => {
+  let myRequests = [];
+  let myid = req.body["memberid"];
+  if (!myid) {
+    res.send({
+      success: false,
+      error: "Need to supply one member"
+    });
+    return;
+  }
+  let query = `SELECT Firstname, LastName from members WHERE memberid IN (SELECT memberid_b from contacts where memberid_a = ${myid} and verified = 0);`;
+  db.manyOrNone(query, [myid])
+    .then(rows => {
+      rows.forEach(element => {
+        myRequests.push(element);
+      });
+      res.send({
+        success: true,
+        myRequests: myRequests
+      });
+    })
+    .catch(err => {
+      res.send({
+        success: false,
+        error: err
+      });
+    });
+});
+
 module.exports = router;
