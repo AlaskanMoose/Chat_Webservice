@@ -109,7 +109,7 @@ router.post("/pending", (req, res) => {
     });
     return;
   }
-  let query = `SELECT firstname, lastname, username, email from members WHERE memberid IN (SELECT memberid_b from contacts where memberid_a = ${myid} and verified = 0);`;
+  let query = `SELECT memberid, firstname, lastname, username, email from members WHERE memberid IN (SELECT memberid_b from contacts where memberid_a = ${myid} and verified = 0);`;
   db.manyOrNone(query, [myid])
     .then(rows => {
       rows.forEach(element => {
