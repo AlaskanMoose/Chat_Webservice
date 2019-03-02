@@ -72,14 +72,14 @@ router.post("/myContacts", (req, res) => {
   }
 
   db.manyOrNone(
-      `SELECT Firstname, LastName, username, email, memberid from members WHERE memberid IN (SELECT memberid_b from contacts where memberid_a = ${myid} and verified = 0);`
+      `SELECT Firstname, LastName, username, email, memberid from members WHERE memberid IN (SELECT memberid_b from contacts where memberid_a = ${myid} and verified = 1);`
     )
     .then(rows => {
       rows.forEach(element => {
         myContacts.push(element);
       });
       db.manyOrNone(
-        `SELECT Firstname, LastName, username, email, memberid from members WHERE memberid IN (SELECT memberid_a from contacts where memberid_b = ${myid} and verified = 0);`
+        `SELECT Firstname, LastName, username, email, memberid from members WHERE memberid IN (SELECT memberid_a from contacts where memberid_b = ${myid} and verified = 1);`
       ).then(rows => {
         rows.forEach(element => {
           myContacts.push(element);
