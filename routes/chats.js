@@ -8,7 +8,47 @@ var router = express.Router();
 //This allows parsing of the body of POST requests, that are encoded in JSON
 router.use(bodyParser.json());
 
-// This endpoint takes in a memberID and returns
+// This endpoint takes in a memberid and a chatname, and creates a chat room
+// with given member in it
+router.post("/createChat", (req, res) => {
+  let memberid = req.body["memberid"];
+  let chatname = req.body["chatname"];
+
+  if (!memberid || !chatname) {
+    res.send({
+      success: false,
+      error: "Please provide both a memberid and chatname"
+    });
+    return;
+  }
+
+  db.one(
+    `INSERT into chats (name) Values('${chatname}') RETURNING chatid, name;`
+  )
+    .then(data => {
+      let chatid = data["chatid"];
+      db.none(`INSERT into chatmembers Values(${chatid}, ${memberid})`)
+        .then(() => {
+          res.send({
+            chatid
+          });
+        })
+        .catch(err => {
+          res.send({
+            success: false,
+            error: err
+          });
+        });
+    })
+    .catch(err => {
+      res.send({
+        success: false,
+        error: err
+      });
+    });
+});
+
+// This endpoint takes in a memberid and returns
 // all the chatroom ID's and chatroom names they are in, and all the chatMembers
 // in those rooms, excluding the input member
 
@@ -74,6 +114,11 @@ router.post("/getChats", (req, res) => {
         error: err
       });
     });
+});
+
+router.post("/addtoChat", (req, res) => {
+  let member1id = req.body["member1id"];
+  let member2id = req.body["member2id"];
 });
 
 module.exports = router;
