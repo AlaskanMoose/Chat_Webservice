@@ -30,6 +30,7 @@ router.post("/createChat", (req, res) => {
       db.none(`INSERT into chatmembers Values(${chatid}, ${memberid})`)
         .then(() => {
           res.send({
+            success: true,
             chatid
           });
         })
@@ -116,9 +117,24 @@ router.post("/getChats", (req, res) => {
     });
 });
 
+// Takes in a member id and chat id, and adds that user to the given
+//chatroom
 router.post("/addtoChat", (req, res) => {
-  let member1id = req.body["member1id"];
-  let member2id = req.body["member2id"];
+  let memberid = req.body["memberid"];
+  let chatid = req.body["chatid"];
+
+  db.none(`INSERT into chatmembers Values(${chatid}, ${memberid})`)
+    .then(() => {
+      res.send({
+        success: true
+      });
+    })
+    .catch(err => {
+      res.send({
+        success: false,
+        error: err
+      });
+    });
 });
 
 module.exports = router;
