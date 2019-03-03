@@ -27,6 +27,7 @@ app.use("/messaging", require("./routes/messaging.js"));
 app.use("/members", require("./routes/members.js"));
 app.use("/contacts", require("./routes/contacts.js"));
 app.use("/chats", require("./routes/chats.js"));
+app.use("/search", require("./routes/search.js"));
 
 // app.use("/contacts", require("./routes/contacts.js"));
 
