@@ -8,6 +8,8 @@ var router = express.Router();
 //This allows parsing of the body of POST requests, that are encoded in JSON
 router.use(bodyParser.json());
 
+
+
 // use this endpoint to pass in two contacts to add to each other
 // PASS IN THE BODY member1id AND member2id
 router.post("/addContact", (req, res) => {
@@ -118,6 +120,35 @@ router.post("/pending", (req, res) => {
       res.send({
         success: true,
         myRequests: myRequests
+      });
+    })
+    .catch(err => {
+      res.send({
+        success: false,
+        error: err
+      });
+    });
+});
+
+// Use this enpoint to verify friend requests
+// Pass in the sender's memberid
+router.post("/verify", (req, res) => {
+  let member1 = req.body["memberid_a"];
+  let member2 = req.body["memberid_b"];
+  if (!member1 || !member2) {
+    res.send({
+      success: false,
+      error: "Need to supply two members"
+    });
+    return;
+  }
+
+  let update = `update contacts set verified = 1 where memberid_a = ${member1} and memberid_b = ${member2}`;
+
+  db.manyOrNone(update, [member1, member2])
+    .then(() => {
+      res.send({
+        success: true,
       });
     })
     .catch(err => {
