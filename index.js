@@ -31,7 +31,7 @@ app.use("/search", require("./routes/search.js"));
 
 app.use("/weather", require("./routes/weather.js"));
 
-// app.use("/contacts", require("./routes/contacts.js"));
+app.use("/contacts", require("./routes/contacts.js"));
 
 /*
  * Return HTML for the / end point.
@@ -40,7 +40,9 @@ app.use("/weather", require("./routes/weather.js"));
  * Look up the node module 'fs' ex: require('fs');
  */
 app.get("/", (req, res) => {
-  res.writeHead(200, { "Content-Type": "text/html" });
+  res.writeHead(200, {
+    "Content-Type": "text/html"
+  });
   for (i = 1; i < 7; i++) {
     //write a response to the client
     res.write("<h" + i + ' style="color:blue">Hello World!!</h' + i + ">");

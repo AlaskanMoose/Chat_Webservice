@@ -26,8 +26,8 @@ router.post("/addContact", (req, res) => {
   db.none(insert, [member1, member2])
     .then(() => {
       db.manyOrNone(
-        `SELECT Firstname, LastName from members WHERE memberid IN (SELECT memberid_b from contacts where memberid_a = ${member1});`
-      )
+          `SELECT Firstname, LastName from members WHERE memberid IN (SELECT memberid_b from contacts where memberid_a = ${member1});`
+        )
         .then(rows => {
           rows.forEach(element => {
             myContacts.push(element);
@@ -72,14 +72,14 @@ router.post("/myContacts", (req, res) => {
   }
 
   db.manyOrNone(
-    `SELECT Firstname, LastName from members WHERE memberid IN (SELECT memberid_b from contacts where memberid_a = ${myid});`
-  )
+      `SELECT Firstname, LastName, username, email, memberid from members WHERE memberid IN (SELECT memberid_b from contacts where memberid_a = ${myid} and verified = 1);`
+    )
     .then(rows => {
       rows.forEach(element => {
         myContacts.push(element);
       });
       db.manyOrNone(
-        `SELECT Firstname, LastName from members WHERE memberid IN (SELECT memberid_a from contacts where memberid_b = ${myid});`
+        `SELECT Firstname, LastName, username, email, memberid from members WHERE memberid IN (SELECT memberid_a from contacts where memberid_b = ${myid} and verified = 1);`
       ).then(rows => {
         rows.forEach(element => {
           myContacts.push(element);
@@ -109,7 +109,7 @@ router.post("/pending", (req, res) => {
     });
     return;
   }
-  let query = `SELECT Firstname, LastName from members WHERE memberid IN (SELECT memberid_b from contacts where memberid_a = ${myid} and verified = 0);`;
+  let query = `SELECT memberid, firstname, lastname, username, email from members WHERE memberid IN (SELECT memberid_b from contacts where memberid_a = ${myid} and verified = 0);`;
   db.manyOrNone(query, [myid])
     .then(rows => {
       rows.forEach(element => {
