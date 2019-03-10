@@ -19,8 +19,8 @@ router.post("/sendRequest", (req, res) => {
     });
     return;
   }
-
-  db.one(`select memberid from members where username = ${requestuser};`)
+  console.log('helllooo' + requestuser);
+  db.one(`select memberid from members where username = $1;`, [requestuser])
     .then(row => {
       let requestMemberID = row['memberid'];
       db.none(`insert into contacts(memberid_a, memberid_b, verified) values (${senderMemberID}, ${requestMemberID}, 0);`)
@@ -39,7 +39,7 @@ router.post("/sendRequest", (req, res) => {
     .catch(err => {
       res.send({
         success: false,
-        error: 'User does not exist'
+        error: err
       })
     });
 });
