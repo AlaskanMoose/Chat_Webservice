@@ -15,7 +15,7 @@ router.post("/sendRequest", (req, res) => {
   if (!senderMemberID || !requestuser) {
     res.send({
       success: false,
-      error: "Need sender memberid and request email"
+      error: "Need sender memberid and request username"
     });
     return;
   }
