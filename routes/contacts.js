@@ -9,6 +9,42 @@ var router = express.Router();
 router.use(bodyParser.json());
 
 
+router.post("/sendRequest", (req, res) => {
+  let senderMemberID = req.body['memberid'];
+  let requestemail = req.body['email'];
+  if (!senderMemberID || !requestemail) {
+    res.send({
+      success: false,
+      error: "Need sender memberid and request email"
+    });
+    return;
+  }
+
+  let findMember = `select memberid from members where `
+  db.one(`select memberid from members where email = ${requestemail};`)
+    .then(row => {
+      let requestMemberID = row['memberid'];
+      db.none(`insert into contacts(memberid_a, memberid_b, verified) values (${senderMemberID}, ${requestMemberID}, 0);`)
+        .then(() => {
+          res.send({
+            success: true,
+          });
+        })
+        .catch(err => {
+          res.send({
+            success: false,
+            error: err
+          });
+        });
+    })
+    .catch(err => {
+      res.send({
+        success: false,
+        error: 'User does not exist'
+      })
+    });
+});
+
 
 // use this endpoint to pass in two contacts to add to each other
 // PASS IN THE BODY member1id AND member2id
