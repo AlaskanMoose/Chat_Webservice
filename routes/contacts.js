@@ -39,7 +39,7 @@ router.post("/sendRequest", (req, res) => {
     .catch(err => {
       res.send({
         success: false,
-        error: err
+        error: "User does not exist!"
       })
     });
 });
