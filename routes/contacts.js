@@ -175,6 +175,36 @@ router.post("/pending", (req, res) => {
     });
 });
 
+// Returns all the friends request sent by a user
+router.post("/sent", (req, res) => {
+  let sentlist = [];
+  let myid = req.body["memberid"];
+  if (!myid) {
+    res.send({
+      success: false,
+      error: "Need to supply one member"
+    });
+    return;
+  }
+  let query = `SELECT memberid, firstname, lastname, username, email from members WHERE memberid IN (SELECT memberid_b from contacts where memberid_a = ${myid} and verified = 0);`;
+  db.manyOrNone(query, [myid])
+    .then(rows => {
+      rows.forEach(element => {
+        sentlist.push(element);
+      });
+      res.send({
+        success: true,
+        sentlist: sentlist
+      });
+    })
+    .catch(err => {
+      res.send({
+        success: false,
+        error: err
+      });
+    });
+});
+
 // Use this enpoint to verify friend requests
 // Pass in the sender's memberid
 router.post("/verify", (req, res) => {
