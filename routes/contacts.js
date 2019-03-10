@@ -27,6 +27,7 @@ router.post("/sendRequest", (req, res) => {
         .then(() => {
           res.send({
             success: true,
+            user: requestuser
           });
         })
         .catch(err => {
