@@ -19,23 +19,32 @@ router.post("/sendRequest", (req, res) => {
     });
     return;
   }
-  console.log('helllooo' + requestuser);
   db.one(`select memberid from members where username = $1;`, [requestuser])
     .then(row => {
       let requestMemberID = row['memberid'];
-      db.none(`insert into contacts(memberid_a, memberid_b, verified) values (${senderMemberID}, ${requestMemberID}, 0);`)
-        .then(() => {
+      db.one(`select * from contacts where memberid_a = ${senderMemberID} and memberid_b = ${requestMemberID};`)
+        .then(row => {
           res.send({
-            success: true,
-            user: requestuser
+            success: false,
+            error: "You already sent this user a request"
           });
         })
         .catch(err => {
-          res.send({
-            success: false,
-            error: err
-          });
+          db.none(`insert into contacts(memberid_a, memberid_b, verified) values (${senderMemberID}, ${requestMemberID}, 0);`)
+            .then(() => {
+              res.send({
+                success: true,
+                user: requestuser
+              });
+            })
+            .catch(err => {
+              res.send({
+                success: false,
+                error: err
+              });
+            });
         });
+
     })
     .catch(err => {
       res.send({
